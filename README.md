@@ -1,24 +1,41 @@
-# The Found & Lost project
-🔍🔑🌍
+# Haminjast Backend
 
-This project is a web application that allows people to post about lost and found items. Users can create an account, submit details about lost or found items and search for items based on different criteria such as location, date, and item type.
+Go services for a lost-and-found platform, with search, chat, and background processing.
 
-## 🏃‍♀️ Instructions to run the project locally:
+## Overview
 
-🐳 Builds the docker image with `make build`
-🚀 Start the docker containers in detached mode (don't show any logs) `make up`
-⚙️ Build and start the containers immediately `make start`
-⛔️ Stop the docker containers `make down`
-📜 Show the live logs `make logs`
+Backend services for Haminjast, a lost-and-found platform. The repository contains a main API service and a worker service, with code for posters, users, search, conversations, and background processing.
 
-You can find all the commands in the Makefile at the root of the repository.
+**Stack:** Go · Docker Compose · PostgreSQL · Elasticsearch · Redis · RabbitMQ
 
-✨ Additional Features:
+## Repository structure
 
-1️⃣ **Elasticsearch-powered Search**: Utilizing Elasticsearch, the project offers a powerful search functionality. Users can easily search for lost or found items based on various criteria, including location, date, and item type. 🧭📅🔍
+| Path | Responsibility |
+| --- | --- |
+| `src/MainService/` | API, data models, repositories, and WebSocket code |
+| `src/WorkerService/` | Background processing and notification code |
+| `src/StackBuilderService/` | Additional service-stack configuration |
+| `src/MainService/docs/` | Generated Swagger documentation |
 
-2️⃣ **Real-time Chat**: Experience seamless communication with the real-time chat feature, enabling users to engage in instant conversations. Stay connected and easily exchange information between individuals involved in lost and found item transactions. 💬📲🌐
+## Local development
 
-3️⃣ **AI-Powered Poster's Moral Validation**: The project incorporates AI technology to provide moral validation for posters. Through sophisticated algorithms, the system assesses the content shared by users, ensuring ethical and appropriate posts. 🧠✅📣
+Install Docker with Compose and GNU Make. Review the service configuration and environment variables for your local setup before starting containers.
 
-Join the Found & Lost community today and help reunite lost items with their owners! 🌟👥🔍
+```bash
+git clone https://github.com/imhmdrz/haminjast-backend.git
+cd haminjast-backend/src/MainService
+make start DOCKER_COMP="docker compose"
+```
+
+The Makefile lives under `src/MainService/`, not the repository root. Its default executable is the legacy `docker-compose`; the override above selects the modern Compose command.
+
+```bash
+make logs DOCKER_COMP="docker compose"
+make down DOCKER_COMP="docker compose"
+```
+
+Review the separate Compose files under `src/WorkerService/` and `src/StackBuilderService/` for the rest of the stack. Starting the main service alone does not establish that all integrations are configured.
+
+## Upstream
+
+This repository is a fork of [MohammadaliFakhari/Haminjast-BackEnd](https://github.com/MohammadaliFakhari/Haminjast-BackEnd). Credit for the upstream project belongs to its contributors.
